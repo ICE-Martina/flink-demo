@@ -38,7 +38,7 @@ public class ClickParallelSource implements ParallelSourceFunction<Event> {
             Long timestamp = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
             // Long timestamp = LocalDateTime.now().toEpochSecond(ZoneOffset.of("+8"))
             ctx.collect(new Event(user, url, timestamp));
-            TimeUnit.SECONDS.sleep(1);
+            TimeUnit.MILLISECONDS.sleep(random.nextInt(1000));
         }
     }
 
