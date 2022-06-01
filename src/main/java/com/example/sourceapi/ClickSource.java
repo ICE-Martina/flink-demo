@@ -23,7 +23,8 @@ public class ClickSource implements SourceFunction<Event> {
     public void run(SourceContext<Event> ctx) throws Exception {
         List<String> users = Lists.newArrayList("patton", "nicole", "anthony", "venus", "starlight",
                 "stellar", "aldrich", "edgar", "danika");
-        List<String> urls = Lists.newArrayList("https://item.example.com/17761516943.html",
+        List<String> urls = Lists.newArrayList(
+                "https://item.example.com/pay/17761516943.html",
                 "https://item.example.com/pmp_item/649125436508.htm",
                 "https://cart.example.com/cart.htm?spm=a220o",
                 "https://shoucang.example.com/collectList.htm?spm=a1z02.1",
@@ -31,7 +32,8 @@ public class ClickSource implements SourceFunction<Event> {
                 "https://mall.example.hk/shop/tianwangbiao/index.html",
                 "https://item.example.com/12949739254.html",
                 "https://item.example.com/100037132852.html#crumb-wrap",
-                "https://mall.example.com/index-11573727.html?from=pc");
+                "https://mall.example.com/index-11573727.html?from=pc",
+                "https://mall.example.com/login.html?from=app");
 
         while (running) {
             String user = users.get(random.nextInt(users.size()));
