@@ -28,11 +28,11 @@ public class LoginFailDetectExample {
                 new LoginEvent("user_1", "192.168.0.2", "fail", 3000L),
                 new LoginEvent("user_2", "192.168.1.29", "fail", 4000L),
                 new LoginEvent("user_1", "171.56.23.10", "fail", 5000L),
-                new LoginEvent("user_2", "192.168.1.29", "success", 6000L),
                 new LoginEvent("user_2", "192.168.1.29", "fail", 7000L),
-                new LoginEvent("user_2", "192.168.1.29", "fail", 8000L))
+                new LoginEvent("user_2", "192.168.1.29", "fail", 8000L),
+                new LoginEvent("user_2", "192.168.1.29", "success", 6000L))
                 .assignTimestampsAndWatermarks(WatermarkStrategy
-                        .<LoginEvent>forBoundedOutOfOrderness(Duration.ZERO)
+                        .<LoginEvent>forBoundedOutOfOrderness(Duration.ofSeconds(3))
                         .withTimestampAssigner((SerializableTimestampAssigner<LoginEvent>) (element, recordTimestamp) -> element.ts));
 
         // 2.定义模式, 连续三次登录失败
