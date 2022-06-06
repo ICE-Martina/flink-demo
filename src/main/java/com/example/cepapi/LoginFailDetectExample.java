@@ -35,8 +35,8 @@ public class LoginFailDetectExample {
                         .<LoginEvent>forBoundedOutOfOrderness(Duration.ofSeconds(3))
                         .withTimestampAssigner((SerializableTimestampAssigner<LoginEvent>) (element, recordTimestamp) -> element.ts));
 
-        // 2.定义模式, 连续三次登录失败
-        Pattern<LoginEvent, LoginEvent> pattern = Pattern.<LoginEvent>begin("first")
+        // 2.定义模式, 连续三次登录失败(三次登录失败的第一种定义方式)
+        /*Pattern<LoginEvent, LoginEvent> pattern = Pattern.<LoginEvent>begin("first")
                 .where(new SimpleCondition<LoginEvent>() {
                     @Override
                     public boolean filter(LoginEvent value) {
@@ -56,16 +56,30 @@ public class LoginFailDetectExample {
                     public boolean filter(LoginEvent value) {
                         return "fail".equals(value.eventType);
                     }
-                });
+                });*/
+
+        // 连续三次登录失败的第二种中定义方式
+        Pattern<LoginEvent, LoginEvent> pattern = Pattern.<LoginEvent>begin("loginFail")
+                .where(new SimpleCondition<LoginEvent>() {
+                    @Override
+                    public boolean filter(LoginEvent value) {
+                        return "fail".equalsIgnoreCase(value.eventType);
+                    }
+                }).times(3).consecutive();
 
         // 3.将模式应用到数据流上, 检测复杂事件
         PatternStream<LoginEvent> patternStream = CEP.pattern(loginData.keyBy(data -> data.userId), pattern);
 
         // 4.将检测到的复杂事件提取出来
         DataStream<String> result = patternStream.select((PatternSelectFunction<LoginEvent, String>) map -> {
-            LoginEvent firstFail = map.get("first").get(0);
+            /*LoginEvent firstFail = map.get("first").get(0);
             LoginEvent secondFail = map.get("second").get(0);
-            LoginEvent thirdFail = map.get("third").get(0);
+            LoginEvent thirdFail = map.get("third").get(0);*/
+
+            LoginEvent firstFail = map.get("loginFail").get(0);
+            LoginEvent secondFail = map.get("loginFail").get(1);
+            LoginEvent thirdFail = map.get("loginFail").get(2);
+
             return firstFail.userId + " 连续三次登录失败, 登录时间: " +
                     firstFail.ts + ", " +
                     secondFail.ts + ", " +
