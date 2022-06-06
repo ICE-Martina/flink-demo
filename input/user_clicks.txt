@@ -7,4 +7,9 @@ stellar,https://mall.example.hk/shop/tianwangbiao/index.html,6000
 aldrich,https://item.example.com/12949739254.html,5000
 anthony,https://buy.example.com/order/confirm_order.htm?spm=a1z0d,7000
 edgar,https://item.example.com/100037132852.html#crumb-wrap,8000
+aldrich,https://buy.example.com/12949739254.html,8000
 danika,https://mall.example.com/index-11573727.html?from=pc,9000
+patton,https://item.example.com/12949739254.html,12000
+nicole,https://item.example.com/pmp_item/index-11573727.htm,15000
+venus,https://shoucang.example.com/100037132852.htm?spm=a1z02.1,16000
+patton,https://buy.example.com/12949739254.html,17000

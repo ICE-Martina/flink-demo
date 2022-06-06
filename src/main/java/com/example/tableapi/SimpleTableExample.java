@@ -46,6 +46,7 @@ public class SimpleTableExample {
         Table sourceTable1 = tableEnvironment.fromDataStream(sourceStream, Schema.newBuilder()
                 .column("user", "STRING")
                 .column("url", DataTypes.STRING())
+                .column("timestamp", DataTypes.BIGINT())
                 .columnByExpression("ts", "TO_TIMESTAMP_LTZ(`timestamp`, 3)")
                 .watermark("ts", "ts - INTERVAL '10' SECOND")
                 .build());
