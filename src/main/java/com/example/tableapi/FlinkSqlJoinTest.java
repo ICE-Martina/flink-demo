@@ -17,7 +17,7 @@ public class FlinkSqlJoinTest {
 
         // inner join两张表默认的TTL是PT0S(process time 0 second),即默认不过期
 //        System.out.println(tableEnvironment.getConfig().getIdleStateRetention());
-        // 生产环境一般都要配置TTL。设置两张表的TTL为10s
+        // 生产环境一般都要配置TTL。设置TTL为10s, 两张表都会生效
         tableEnvironment.getConfig().setIdleStateRetention(Duration.ofSeconds(10));
 
         DataStream<Pojo1> pojo1Stream = environment.socketTextStream("master1", 6666).map(str -> {
