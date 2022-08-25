@@ -105,10 +105,10 @@ public class CompletableFutureApiDemo {
             }
             System.out.println("第一阶段...");
             return ThreadLocalRandom.current().nextInt(6);
-        }, pool).handle((f,e) -> {
+        }, pool).handle((f, e) -> {
             System.out.println("第二阶段...");
             return f + 1;
-        }).handle((f,e) -> {
+        }).handle((f, e) -> {
             System.out.println("第三阶段...");
             int res = f + 1;
             if (res > 5) {
@@ -125,6 +125,20 @@ public class CompletableFutureApiDemo {
         });
 
         System.out.println(Thread.currentThread().getName() + "获取结果: " + completableFuture.join());
+    }
+
+    @Test
+    public void test4() {
+        CompletableFuture.supplyAsync(() -> ThreadLocalRandom.current().nextInt(6), pool)
+                .thenApply(f -> f + 1).thenApply(f -> f + 1)
+                .thenAccept(System.out::println);
+    }
+
+    @Test
+    public void test5() {
+        System.out.println(CompletableFuture.supplyAsync(() -> "task1", pool).thenAccept(System.out::println).join());
+        System.out.println(CompletableFuture.supplyAsync(() -> "task1", pool).thenRun(() -> System.out.println("task2")).join());
+        System.out.println(CompletableFuture.supplyAsync(() -> "task1", pool).thenApply(f -> f + ", task2").join());
     }
 
     @After
